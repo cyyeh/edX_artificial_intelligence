@@ -4,9 +4,9 @@ This repo consists of programming projects from edX course from Columbia in Arti
 
 ### Course Syllabus and Current Progress
 
-- [ v ] Week 1: Introduction to AI
-- [ v ] Week 2: Intelligent Agents and Uninformed Search
-- [ v ] Week 3: Heuristic Search
+- [x] Week 1: Introduction to AI
+- [x] Week 2: Intelligent Agents and Uninformed Search
+- [x] Week 3: Heuristic Search
 - [ ] Week 4: Adversarial Search and Games
 - [ ] Week 5: Machine Learning 1
 - [ ] Week 6: Machine Learning 2

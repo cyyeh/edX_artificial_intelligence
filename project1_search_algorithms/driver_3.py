@@ -122,19 +122,25 @@ class PuzzleState(object):
 
 # Function that Writes to output.txt
 ### Students need to change the method to have the corresponding parameters
-def writeOutput(sm, result, time_mem_statistics):
+def writeOutput(sm, result, time_mem_statistics, display_path=False):
     f = open('output.txt', mode='w')
     final_state, nodes_expanded, max_search_depth = result
     path_to_goal = [final_state.action]
     cost_of_path = final_state.cost
-
+    
+    if display_path:
+        state_to_goal = [final_state]
+        
     parent_state = final_state.parent
     while parent_state:
         if parent_state.parent:
             path_to_goal.append(parent_state.action)
+        if display_path:
+            state_to_goal.append(parent_state)
         parent_state = parent_state.parent
 
     path_to_goal.reverse()
+
     search_depth = len(path_to_goal)
     
     f.write("path_to_goal: " + str(path_to_goal) + "\n")
@@ -146,6 +152,13 @@ def writeOutput(sm, result, time_mem_statistics):
     f.write("max_ram_usage: " + str(time_mem_statistics[1]) + "\n")
 
     f.close()
+
+    if display_path:
+        state_to_goal.reverse()
+        for idx, state in enumerate(state_to_goal):
+            print(idx, 'th')
+            state.display()
+            print()
 
 def bfs_search(initial_state):
     """BFS search"""
@@ -294,7 +307,7 @@ def main():
     ram_usage = (mem_final - mem_init) / 1000
 
     if result:
-        writeOutput(sm, final_states, (running_time, ram_usage))
+        writeOutput(sm, final_states, (running_time, ram_usage), display_path=True)
 
 if __name__ == '__main__':
     main()

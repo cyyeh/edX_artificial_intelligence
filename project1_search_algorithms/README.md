@@ -105,3 +105,66 @@ Begin by writing a class to represent the state of the game at a given turn, inc
 
 You will not be graded on your design, so you are at a liberty to choose among your favorite programming paradigms. Students have successfully completed this project using an entirely object-oriented approach, and others have done so with a purely functional approach. Your submission will receive full credit as long as your driver program outputs the correct information.
 
+### Pseudocode for search algorithms
+
+**breadth-first search**
+
+```
+function BREADTH-FIRST-SEARCH(initialState, goalTest)
+    frontier = Queue.new(initialState)
+    explored = Set.new()
+
+    while not frontier.isEmpty():
+        state = frontier.dequeue()
+        explored.add(state)
+
+        if goalTest(state):
+            return SUCCESS(state)
+        
+        for neighbor in state.neighbors():
+            if neighbor not in (frontier or explored):
+                frontier.enqueue(neighbor)
+    return FAILURE
+```
+
+**depth-first search**
+
+```
+function DEPTH-FIRST-SEARCH(initialState, goalTest)
+    frontier = Stack.new(initialState)
+    explored = Set.new()
+
+    while not frontier.isEmpty():
+        state = frontier.pop()
+        explored.add(state)
+
+        if goalTest(state):
+            return SUCCESS(state)
+        
+        for neighbor in state.neighbors():
+            if neighbor not in (frontier or explored):
+                frontier.push(neighbor)
+    return FAILURE
+```
+
+**A* search**
+
+```
+function A-STAR-SEARCH(initialState, goalTest)
+    frontier = Heap.new(initialState)
+    explored = Set.new()
+
+    while not frontier.isEmpty():
+        state = frontier.deleteMin()
+        explored.add(state)
+
+        if goalTest(state):
+            return SUCCESS(state)
+        
+        for neighbor in state.neighbors():
+            if neighbor not in (frontier or explored):
+                frontier.insert(state)
+            else if neighbor in frontier:
+                frontier.decreaseKey(neighbor)
+    return FAILURE
+```

@@ -124,10 +124,9 @@ class PuzzleState(object):
 ### Students need to change the method to have the corresponding parameters
 def writeOutput(sm, result, time_mem_statistics):
     f = open('output.txt', mode='w')
-    final_state = result["state"]
+    final_state, nodes_expanded, max_search_depth = result
     path_to_goal = [final_state.action]
     cost_of_path = final_state.cost
-    nodes_expanded = result["nodes_expanded"]
 
     parent_state = final_state.parent
     while parent_state:
@@ -142,12 +141,7 @@ def writeOutput(sm, result, time_mem_statistics):
     f.write("cost_of_path: " + str(cost_of_path) +  "\n")
     f.write("nodes_expanded: " + str(nodes_expanded) + "\n")
     f.write("search_depth: " + str(search_depth) + "\n")
-    if sm == "bfs":
-        f.write("max_search_depth: " + str(search_depth + 1) + "\n")
-    elif sm == "dfs":
-        f.write("max_search_depth: " + str(search_depth) + "\n")
-    elif sm == "ast":
-        f.write("max_search_depth: " + str(search_depth) +  "\n")
+    f.write("max_search_depth: " + str(max_search_depth) +  "\n")
     f.write("running_time: " + str(time_mem_statistics[0]) + "\n")
     f.write("max_ram_usage: " + str(time_mem_statistics[1]) + "\n")
 
@@ -160,23 +154,22 @@ def bfs_search(initial_state):
     frontier_and_explored = {} # frontier and explored states
     frontier_and_explored[tuple(initial_state.config)] = True
     nodes_expanded = 0
+    max_search_depth = 0
 
     while not frontier.empty():
         state = frontier.get() # dequeue
 
         if test_goal(state):
-            final_states = {
-                "state": state,
-                "nodes_expanded": nodes_expanded
-            }
-            return True, final_states
+            return True, ( state, nodes_expanded, max_search_depth )
         
         state.expand(reverse=False)
         nodes_expanded += 1
         for neighbor in state.children:
-            if not tuple(neighbor.config) in frontier_and_explored:
+            if not tuple(neighbor.config) in frontier_and_explored:   
                 frontier.put(neighbor) # enqueue
                 frontier_and_explored[tuple(neighbor.config)] = True
+                if neighbor.cost > max_search_depth:
+                    max_search_depth = neighbor.cost
 
 
     return False, None
@@ -188,16 +181,13 @@ def dfs_search(initial_state):
     frontier_and_explored = {} # frontier and explored states
     frontier_and_explored[tuple(initial_state.config)] = True
     nodes_expanded = 0
+    max_search_depth = 0
 
     while not frontier.empty():
         state = frontier.get() # pop
         
         if test_goal(state):
-            final_states = {
-                "state": state,
-                "nodes_expanded": nodes_expanded
-            }
-            return True, final_states
+            return True, ( state, nodes_expanded, max_search_depth )
         
         state.expand()
         nodes_expanded += 1
@@ -205,6 +195,8 @@ def dfs_search(initial_state):
             if not tuple(neighbor.config) in frontier_and_explored:
                 frontier.put(neighbor) # push
                 frontier_and_explored[tuple(neighbor.config)] = True
+                if neighbor.cost > max_search_depth:
+                    max_search_depth = neighbor.cost
 
     return False, None
 
@@ -214,20 +206,16 @@ def A_star_search(initial_state):
     frontier.put(calculate_total_cost(initial_state), initial_state)
     frontier_dict = {}
     explored_dict = {}
-    frontier_dict[tuple(initial_state.config)] = True
+    frontier_dict[tuple(initial_state.config)] = initial_state
     nodes_expanded = 0
+    max_search_depth = 0
 
     while not frontier.empty():
         state = frontier.get()
-        #del frontier_dict[tuple(state.config)]
         explored_dict[tuple(state.config)] = True
 
         if test_goal(state):
-            final_states = {
-                "state": state,
-                "nodes_expanded": nodes_expanded
-            }
-            return True, final_states
+            return True, ( state, nodes_expanded, max_search_depth )
         
         state.expand()
         nodes_expanded += 1
@@ -235,9 +223,12 @@ def A_star_search(initial_state):
             if not tuple(neighbor.config) in frontier_dict and \
             not tuple(neighbor.config) in explored_dict:
                 frontier.put(calculate_total_cost(neighbor), neighbor)
-                frontier_dict[tuple(neighbor.config)] = True
+                frontier_dict[tuple(neighbor.config)] = neighbor
+                if neighbor.cost > max_search_depth:
+                    max_search_depth = neighbor.cost
             elif tuple(neighbor.config) in frontier_dict:
-                frontier.put(calculate_total_cost(neighbor), neighbor)
+                if calculate_total_cost(neighbor) < calculate_total_cost(frontier_dict[tuple(neighbor.config)]):
+                    frontier.put(calculate_total_cost(neighbor), neighbor)
 
     return False, None
 

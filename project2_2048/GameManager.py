@@ -1,7 +1,7 @@
-from Grid_3       import Grid
-from ComputerAI_3 import ComputerAI
-from PlayerAI_3   import PlayerAI
-from Displayer_3  import Displayer
+from Grid       import Grid
+from ComputerAI import ComputerAI
+from PlayerAI   import PlayerAI
+from Displayer  import Displayer
 from random       import randint
 import time
 

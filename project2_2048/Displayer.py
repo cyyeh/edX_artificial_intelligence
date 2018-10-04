@@ -1,4 +1,4 @@
-from BaseDisplayer_3 import BaseDisplayer
+from BaseDisplayer import BaseDisplayer
 import platform
 import os
 

@@ -113,7 +113,7 @@ class GameManager:
         if randint(0,99) < 100 * self.probability:
             return self.possibleNewTiles[0]
         else:
-            return self.possibleNewTiles[1];
+            return self.possibleNewTiles[1]
 
     def insertRandonTile(self):
         tileValue = self.getNewTileValue()

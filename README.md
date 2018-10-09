@@ -7,10 +7,10 @@ This repo consists of programming projects from edX course from Columbia in Arti
 - [x] Week 1: Introduction to AI
 - [x] Week 2: Intelligent Agents and Uninformed Search
 - [x] Week 3: Heuristic Search
-- [ ] Week 4: Adversarial Search and Games
-- [ ] Week 5: Machine Learning 1
-- [ ] Week 6: Machine Learning 2
-- [ ] Week 7: Machine Learning 3
+- [x] Week 4: Adversarial Search and Games
+- [x] Week 5: Machine Learning 1
+- [x] Week 6: Machine Learning 2
+- [x] Week 7: Machine Learning 3
 - [ ] Week 8: CSP
 - [ ] Week 9: Reinforcement Learning
 - [ ] Week 10: Logical Agents

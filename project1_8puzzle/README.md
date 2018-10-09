@@ -1,4 +1,4 @@
-## Week 2 Project: Search Algorithms
+## Project 1: Search Algorithms
 
 ### I. Introduction
 

@@ -1,4 +1,4 @@
-## Week 4 Project: Adversarial Search and Games
+## Project 2: Adversarial Search and Games
 
 ### I. Introduction
 

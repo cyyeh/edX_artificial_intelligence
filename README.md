@@ -11,7 +11,7 @@ This repo consists of programming projects from edX course from Columbia in Arti
 - [x] Week 5: Machine Learning 1
 - [x] Week 6: Machine Learning 2
 - [x] Week 7: Machine Learning 3
-- [ ] Week 8: CSP
+- [x] Week 8: CSP
 - [ ] Week 9: Reinforcement Learning
 - [ ] Week 10: Logical Agents
 - [ ] Week 11: AI Applications: NLP
